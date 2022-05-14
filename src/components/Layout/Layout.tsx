@@ -3,6 +3,7 @@ import { Header, PageContainer, LayoutContainer, Logo, Main } from './Layout.sty
 import logoURL from '../../assets/images/logo.png';
 import { Title } from '../../styles/typogaphy';
 import { Colors } from '../../styles/colors';
+import { Routes } from 'react-router-dom';
 
 export const Layout = (props : any) => {
   const {children} = props;
@@ -16,7 +17,9 @@ export const Layout = (props : any) => {
           </Title>
         </Header>
         <Main>
-          {children}
+          <Routes>
+            {children}
+          </Routes>
         </Main>
       </PageContainer>
     </LayoutContainer>

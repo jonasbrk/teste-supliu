@@ -15,7 +15,6 @@ background-repeat: no-repeat;
 `;
 
 export const PageContainer = styled.div`
-
 display: flex;
 flex-direction: column;
 height: 80%;
@@ -23,6 +22,10 @@ width: 60%;
 max-width: 1000px;
 margin-top: 16px;
 background-color: ${Colors.halfTransparent};
+
+@media ( max-width: 700px) {
+    width: 90%;
+}
 `;
 
 
@@ -39,7 +42,7 @@ box-shadow: 0px 2px 10px 0px rgb(0 0 0 / 5%);
 `;
 
 export const Main = styled.main`
-height: 100%;
+height: calc(100% - 100px);
 width: 100%;
 display: flex;
 flex-direction: column;
