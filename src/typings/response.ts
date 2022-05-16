@@ -1,5 +1,6 @@
 export interface ITrack {
 id: number,
+album: IAlbum,
 title: string,
 number: number,
 duration: number,   
