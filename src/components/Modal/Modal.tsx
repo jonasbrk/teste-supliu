@@ -1,6 +1,6 @@
 import React, { Children, ReactNode, useRef, useState } from 'react';
 import { CloseIcon } from '../../assets/svg';
-import { Title } from '../../styles/typogaphy';
+import { SubTitle, Title } from '../../styles/typogaphy';
 import { ModalBox, ModalCloseButton, ModalContainer, ModalHeader, ModalOverlay } from './Modal.styles';
 
 interface ModalProps {
@@ -29,7 +29,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
               <ModalCloseButton onClick={()=> onClose()}>
                 <CloseIcon/>
               </ModalCloseButton>
-              <Title fontWeight='bold'>{title}</Title>
+              <SubTitle fontWeight='bold'>{title}</SubTitle>
             </ModalHeader>
             {children}
           </ModalBox>
