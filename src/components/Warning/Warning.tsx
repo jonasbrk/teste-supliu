@@ -16,11 +16,12 @@ interface WarningProps {
     onValidate: (data:dataWarningProps, validate: boolean)=> void
     onClose: () => void
     isOpen: boolean
+    loading?: boolean
 }
 
 export const Warning :React.FC<WarningProps> = (props) => {
 
-  const {data, isOpen, onClose, onValidate} = props;
+  const {data, loading, isOpen, onClose, onValidate} = props;
   const { id, name, type} = data;
   
   return (
@@ -39,7 +40,7 @@ export const Warning :React.FC<WarningProps> = (props) => {
           <Button buttonType='half' onClick={()=> onClose()}>
               Cancelar
           </Button>
-          <Button buttonType='primary' onClick={()=> onValidate(data, true)}>
+          <Button buttonType='primary' loading={loading} onClick={()=> onValidate(data, true)}>
               Excluir
           </Button>
         </WarningFooter>
