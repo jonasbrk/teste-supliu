@@ -11,10 +11,11 @@ export const useTimeFormater = (seg : number, cursive ?: boolean) => {
       cursive ? 'seg' : ''
     }`;
   } else {
-    let hr = Math.floor(seg / 3600);
-    let min = Math.floor((seg % 3600)).toFixed(0);
+    let hrString = Math.floor(seg / 3600);
+    let minString = Math.floor((seg % 3600) / 60);
+    let segString = Math.floor((seg % 3600) % 60);
   
-    formatedTime = `${hr}${cursive ? 'h ' : ''}${min}${cursive ? 'min' : ''}`;
+    formatedTime = `${hrString}${cursive ? 'h ' : ':'}${minString}${cursive ? 'min ' : ':'}${segString}${cursive ? 'seg' : ''}`;
   }
   
   return formatedTime;
