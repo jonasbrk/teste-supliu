@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
 import { Layout } from './components';
-import { Home , AlbumTemplate} from './pages';
+import { Home , AlbumTemplate, NewAlbum} from './pages';
 import { Api } from './services/api';
 import { GlobalStyles } from './styles/globalStyles';
 import { IAlbum } from './typings/response';
@@ -45,7 +45,7 @@ const App = () => {
         <Layout>
           <Route path='/' element={<Home/>} /> 
           <Route path='/album/:id' element={<AlbumTemplate/>} /> 
-          <Route path='/new' element={<Home/>} /> 
+          <Route path='/new' element={<NewAlbum/>} /> 
         </Layout>
       </AlbumsContext.Provider>
   
