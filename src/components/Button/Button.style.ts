@@ -17,6 +17,14 @@ const textColor: Record<ButtonProps['buttonType'], string> = {
   danger: Colors.white,  
 };
 
+export const loadingColor: Record<ButtonProps['buttonType'], string> = {
+
+  primary: Colors.white,
+  half:  Colors.gray,
+  gray: Colors.white,
+  danger: Colors.white,  
+};
+
 export const ButtonContainer = styled.button<ButtonProps>`
 height: 40px;
 width: 100%;
@@ -24,6 +32,7 @@ background-color: ${(props)=> backgroundColor[props.buttonType]};
 border: ${(props) => props.buttonType == 'half' ? `2px solid ${textColor[props.buttonType]}`: '0'};
 border-radius: 100px;
 transition: opacity 0.1s ease-in-out;
+
 &:hover{
 opacity: 0.8;
 }

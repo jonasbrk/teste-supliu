@@ -1,19 +1,22 @@
 import React from 'react';
-import { ButtonContainer, ButtonLabel } from './Button.style';
+import { LoadingIcon } from '../../assets/svg';
+import { Colors } from '../../styles/colors';
+import { ButtonContainer, ButtonLabel, loadingColor } from './Button.style';
 
 export interface ButtonProps {
     buttonType:'primary'| 'half' | 'gray' | 'danger'
     children?: any
     onClick?: ()=> void
+    loading?: boolean
 }
 
 export const Button : React.FC<ButtonProps > = (props) => {
-  const {children, buttonType, onClick} = props;
+  const {loading, children, buttonType, onClick} = props;
 
   return (
-    <ButtonContainer buttonType={buttonType} onClick={onClick} >
+    <ButtonContainer buttonType={buttonType} onClick={onClick} disabled={loading}>
       <ButtonLabel buttonType={buttonType}>
-        {children}
+        { loading ? <LoadingIcon fill={loadingColor[buttonType]} heigth='24px'/> : children}
       </ButtonLabel>
     </ButtonContainer>
   );
