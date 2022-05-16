@@ -10,7 +10,7 @@ interface SearchBarProps {
 
 export const SearchBar: React.FC<SearchBarProps> = (props) => {
   const [query, setQuery] = useState('');
-  const {onClick} = props;
+  const {onClick, loading} = props;
 
   useEffect(()=>{  if(!query) onClick(query);} ,[query]);
   return (
@@ -20,7 +20,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props) => {
         <SearchInput placeholder='Ex. Minas Gerais' onChange={(e) => setQuery(e.target.value)}/>
       </SearchInputContainer>
       <SearchButtonContainer>
-        <Button buttonType='primary' onClick={()=> onClick(query)}>
+        <Button buttonType='primary' loading={loading} onClick={()=> onClick(query)}>
             Procurar
         </Button>
       </SearchButtonContainer>
