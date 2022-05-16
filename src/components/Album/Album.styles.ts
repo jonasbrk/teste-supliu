@@ -8,7 +8,6 @@ padding: 0 10px;
 margin: 16px 0;
 box-sizing: border-box;
 flex-direction: column;
-overflow: hidden;
 `;
 
 export const AlbumHeader = styled.div`
