@@ -16,78 +16,96 @@ interface NewSongProps {
     data: IAlbum
 }
 
+interface FormStateProps {
+  title: string
+  number: string
+  duration: string
+}
 export const NewSong: React.FC<NewSongProps> = (props) => {
   const { data, isOpen, onClose} = props;
   const {albumsData, setAlbumsData} = useContext(AlbumsContext);
-  const [titleInput, setTitleInput] = useState<string>('');
-  const [numberInput, setNumberInput] = useState<string>('');
-  const [durationInput, setDurationInput] = useState<string>('');
-  const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-
-  const errors = {
-    existTitle: '*Este titulo já existe',
-    existNumber: '*Este numero já existe',
-    title: '*Titulo invalido',
-    number: '*Numero invalido',
-    duration: '*Duração invalida',
-  };
-
-  const titleCheck = data.tracks && data.tracks.find((e) => e.title == titleInput);
-  const numberCheck = data.tracks && data.tracks.find((e) => String(e.number) == numberInput);
+  const [formErrors, setFormErrors] = useState<Partial<FormStateProps>>({});
+  const [formState, setFormState] = useState<FormStateProps>({
+    title: '',
+    number: '',
+    duration: '',
+  });
 
   useEffect(()=>{
-    if(!isOpen){
-      setTitleInput('');
-      setDurationInput('');
-      setNumberInput('');
+    if(!isOpen && !loading){
+      setFormState({
+        title: '',
+        number: '',
+        duration: '',
+      });
     }
   },[isOpen]);
+   
+  const validate = (values : FormStateProps) =>{
+    const errors : Partial<FormStateProps> = {};
+    const titleCheck = data?.tracks.find((e) => e.title == formState.title);
+    const numberCheck = data?.tracks.find((e) => String(e.number) == formState.number);
 
-  const handleAdd = async () => {
+    if(!values.title){errors.title = '*Titulo invalido';}
+    else if(titleCheck) {errors.title = '*Este titulo já existe';}
+    if(!values.number){errors.number = '*Numero invalido';}
+    else if(numberCheck){errors.number = '*Este numero já existe';}
+    if(!values.duration){errors.duration = '*Duração invalida';}
 
-    if(!titleInput 
-      || !durationInput 
-      || !numberInput 
-      || titleCheck 
-      || numberCheck){
-      setError(true);
-    }else{
-      setLoading(true);
-      try {
-        const response = await Api('/track',{
-          method:'POST',
-          data:{
-            album_id: data.id,
-            number: numberInput,
-            title: titleInput,
-            duration: durationInput,
-
-          },
-        });
-        if(response.status == 200){
-          console.log(response);
-
-          const newData = albumsData.filter((e) => e.id != data.id);
-          const newAlbuns = [...newData, 
-            {...data, tracks: data.tracks 
-              ? [...data.tracks, response.data] 
-              : [response.data],
-            }];
-
-          setAlbumsData(newAlbuns);
-          setLoading(false);
-          setError(false);
-          onClose();
-
-        }else{
-          console.log(response);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
+    return errors;
   };
+
+  const handleChangeForm = (e : React.ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = e.target;
+    setFormState({...formState, [name]: value});
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    setFormErrors(validate(formState));
+  };
+
+  useEffect(()=>{
+    if(Object.keys(formErrors).length === 0 && loading){
+      const fetch = async () => {
+        try {
+          const response = await Api('/track',{
+            method:'POST',
+            data:{
+              ...formState,
+              album_id: data.id,
+            },
+          });
+          if(response.status == 200){
+            console.log(response);
+        
+            const newData = albumsData.filter((e) => e.id != data.id);
+            const newAlbuns = [...newData, 
+              {...data, tracks: data.tracks 
+                ? [...data.tracks, response.data] 
+                : [response.data],
+              }];
+  
+            setAlbumsData(newAlbuns);
+            setLoading(false);
+            onClose();
+
+          }else{
+            console.log(response);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      
+      fetch();
+
+    }else{
+      setLoading(false);
+    }
+
+  },[formErrors]);
   
   return (
     <Modal isOpen={isOpen} onClose={()=> onClose()} title='Nova Faixa'>
@@ -99,14 +117,15 @@ export const NewSong: React.FC<NewSongProps> = (props) => {
               <Small fontWeight='regular'>
                     Titulo:
               </Small>
-              <SongFormInput onChange={(e)=> setTitleInput(e.target.value)}/>
-              {((!titleInput && error) || titleCheck) && 
+              <SongFormInput 
+                name='title'
+                placeholder='Ex. Alma de boêmio'
+                value={formState.title}
+                disabled={loading}
+                onChange={(e)=> handleChangeForm(e)}/>
               <Small fontWeight='regular' color={Colors.danger}>
-                {
-                  titleCheck ? errors.existTitle : errors.title
-                }
-              </Small>
-              }
+                {formErrors.title}
+              </Small>   
             </SongFormItem>
           </SongFormRow>
         </SongFormContainer>
@@ -116,33 +135,45 @@ export const NewSong: React.FC<NewSongProps> = (props) => {
               <Small fontWeight='regular' >
                     Duração: (em segs)
               </Small>
-              <SongFormInput type='number' min={0} onChange={(e)=> setDurationInput(e.target.value)}/>
-              {!durationInput && error && 
+              <SongFormInput 
+                name='duration'
+                type='number' 
+                min={0} 
+                placeholder="Ex. 2 min = 120 segs"
+                value={formState.duration}
+                disabled={loading}
+                onChange={(e)=> handleChangeForm(e)}/>
               <Small fontWeight='regular' color={Colors.danger}>
-                {errors.duration}
-              </Small>
-              }
+                {formErrors.duration}
+              </Small>   
             </SongFormItem>
             <SongFormItem>
               <Small fontWeight='regular'>
-                    Numero:
+                    Numero da faixa:
               </Small>
-              <SongFormInput type='number' min={0} onChange={(e)=> setNumberInput(e.target.value)}/>
-              {((!numberInput && error) || numberCheck)  && 
+              <SongFormInput 
+                name='number'
+                type='number'
+                min={0}
+                value={formState.number}
+                disabled={loading}
+                onChange={(e)=> handleChangeForm(e)}/>
               <Small fontWeight='regular' color={Colors.danger}>
-                {numberCheck ? errors.existNumber : errors.number}
-              </Small>
-              }
+                {formErrors.number}
+              </Small>   
             </SongFormItem>
           </SongFormRow>
           <SongFormRowButtons>
             <SongButtonContainer>            
-              <Button buttonType='half' onClick={()=> onClose()}>
+              <Button buttonType='half' 
+                onClick={()=> onClose()}>
               Cancelar
               </Button>
             </SongButtonContainer>
             <SongButtonContainer >            
-              <Button buttonType='primary' loading={loading} onClick={()=> handleAdd()}>
+              <Button buttonType='primary' 
+                loading={loading} 
+                onClick={()=> handleSubmit()}>
               Adicionar
               </Button>
             </SongButtonContainer>
