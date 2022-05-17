@@ -11,12 +11,21 @@ import { useTimeFormater } from '../../utils/useTimeFormater';
 
 import { Api } from '../../services/api';
 
-import { Album, Button, NewSong, Warning } from '../../components';
+import { Album, Button, NewSong, Warning, Loading } from '../../components';
 
 import { Colors } from '../../styles/colors';
 import { Small } from '../../styles/typogaphy';
-import { TemplateButton, DescriptionWrapper, SongList, TemplateBanner, TemplateContainer, TemplateDescription, TemplateHeader, TemplateTitle, SongAddContainer } from './AlbumTemplate.styles';
-import { Loading } from '../../components/Loading';
+import { 
+  TemplateButton,
+  DescriptionWrapper,
+  SongList,
+  TemplateBanner,
+  TemplateContainer,
+  TemplateDescription, 
+  TemplateHeader, 
+  TemplateTitle, 
+  SongAddContainer,
+} from './AlbumTemplate.styles';
 
 export const AlbumTemplate = () => {
   const { id } = useParams();
@@ -80,7 +89,7 @@ export const AlbumTemplate = () => {
           <NewSong data={data} isOpen={newSong} onClose={()=> setNewSong(false)}/>
           <TemplateHeader>
             <TemplateButton onClick={()=> navigate('/')}>
-              <ArrowLeftIcon heigth='16px'/>
+              <ArrowLeftIcon height='16px'/>
               <Small fontWeight='regular'>
               Voltar
               </Small>
@@ -118,7 +127,7 @@ export const AlbumTemplate = () => {
                 </Small>
                 <Small fontWeight='bold'>
                   {data.tracks.length &&
-                useTimeFormater(data.tracks.map((e) => e.duration).reduce((p, c) => p + c), true) 
+                useTimeFormater(data.tracks.map((e) => Number(e.duration)).reduce((p, c) => p + c), true) 
                   }
                 </Small>
               </DescriptionWrapper>
