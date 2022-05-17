@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ArrowLeftIcon } from '../../assets/svg';
@@ -13,55 +13,75 @@ import { Colors } from '../../styles/colors';
 import { Description, Small, Title } from '../../styles/typogaphy';
 import { AlbumFormButtonContainer, AlbumFormContainer, AlbumFormInput, AlbumFormInputContainer, AlbumFormRow, AlbumFormRowButtons, NewAlbumButton, NewAlbumContainer, NewAlbumHeader, NewAlbumMain } from './NewAlbum.styles';
 
+interface FormStateProps {
+  name: string,
+  year: string,
+}
+
 export const NewAlbum = () => {
   const {albumsData, setAlbumsData} = useContext(AlbumsContext);
-  const [nameInput, setNameInput] = useState<string>('');
-  const [yearInput, setYearInput] = useState<string>('');
-  const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [formErrors, setFormErrors] = useState<Partial<FormStateProps>>({});
+  const [formState, setFormState] = useState<FormStateProps>({
+    name: '',
+    year: '',
+  });
 
   const navigation = useNavigate();
 
-  const errors = {
-    exist: '*Este nome já existe',
-    name: '*Nome invalido',
-    year: '*Ano invalido',
+  const validate = (values : FormStateProps) =>{
+    const errors : Partial<FormStateProps> = {};
+    const nameCheck = albumsData && albumsData.find((e)=> e.name == formState.name);
+
+    if(!values.name){errors.name = '*Nome invalido';}
+    else if(nameCheck) {errors.name = '*Este nome já existe';}
+    if(!values.year || Number(values.year) < 0)
+    {errors.year = '*Ano invalido';}
+    else if(values.year.length != 4) {
+      errors.year = '*formato invalido. Ex. 1989';
+    }
+
+    return errors;
   };
 
-  const existCheck = albumsData && albumsData.find((e)=> e.name == nameInput);
+  const handleChangeForm = (e : React.ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = e.target;
+    setFormState({...formState, [name]: value});
+  };
 
-  const handleAdd = async () => {
+  const handleSubmit = async () => {
+    setLoading(true);
+    setFormErrors(validate(formState));
+  };
 
-    if(
-      !nameInput 
-      || !yearInput 
-      || yearInput.length != 4 
-      || existCheck
-    ){
-      setError(true);
+  useEffect(()=>{
+    if(Object.keys(formErrors).length === 0 && loading){
+      const fetch = async () => {
+        try {
+          const response = await Api('/album',{
+            method:'POST',
+            data: formState,
+          });
+          if(response.status == 200){
+            setAlbumsData([...albumsData, response.data]);
+            setLoading(false);
+            navigation('/album/' + response.data.id);
+          }else{
+            console.log(response);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      };
+          
+      fetch();
 
     }else{
-      setLoading(true);
-      try {
-        const response = await Api('/album',{
-          method:'POST',
-          data:{
-            name: nameInput,
-            year: yearInput,
-          },
-        });
-        if(response.status == 200){
-          setAlbumsData([...albumsData, response.data]);
-          setLoading(false);
-          navigation('/album/' + response.data.id);
-        }else{
-          console.log(response);
-        }
-      } catch (err) {
-        console.log(err);
-      }
+      setLoading(false);
     }
-  };
+
+  },[formErrors]);
+
   return (
     <NewAlbumContainer>
       <NewAlbumHeader>
@@ -83,31 +103,42 @@ export const NewAlbum = () => {
           <AlbumFormRow>
             <AlbumFormInputContainer>
               <Small fontWeight='regular'>Nome:</Small>
-              <AlbumFormInput onChange={(e)=> setNameInput(e.target.value)}/>
-              {((!nameInput && error) || existCheck) && 
-                  <Small fontWeight='regular' color={Colors.danger}>
-                    {existCheck ? errors.exist : errors.name}
-                  </Small>
-              }
+              <AlbumFormInput 
+                name='name'
+                placeholder='Ex. Rei do gado'
+                value={formState.name}
+                disabled={loading}
+                onChange={(e)=> handleChangeForm(e)}/>
+              <Small fontWeight='regular' color={Colors.danger}>
+                {formErrors.name}
+              </Small>  
             </AlbumFormInputContainer>
             <AlbumFormInputContainer>
               <Small fontWeight='regular'>Ano:</Small>
-              <AlbumFormInput type='number' min={0} onChange={(e)=> setYearInput(e.target.value)}/>
-              {(yearInput.length != 4 && error) && 
+              <AlbumFormInput 
+                name='year'
+                placeholder='Ex. 1989'
+                value={formState.year}
+                type='number' 
+                min={0} 
+                disabled={loading}
+                onChange={(e)=> handleChangeForm(e)}/>
               <Small fontWeight='regular' color={Colors.danger}>
-                {errors.year}
+                {formErrors.year}
               </Small>
-              }
             </AlbumFormInputContainer>    
           </AlbumFormRow>
           <AlbumFormRowButtons>
             <AlbumFormButtonContainer>            
-              <Button buttonType='half' onClick={() => navigation(-1)}>
+              <Button buttonType='half' 
+                onClick={() => navigation(-1)}>
               Cancelar
               </Button>
             </AlbumFormButtonContainer>
             <AlbumFormButtonContainer>            
-              <Button buttonType='primary' loading={loading} onClick={() => handleAdd()}>
+              <Button buttonType='primary' 
+                loading={loading} 
+                onClick={() => handleSubmit()}>
               Adicionar
               </Button>
             </AlbumFormButtonContainer>
