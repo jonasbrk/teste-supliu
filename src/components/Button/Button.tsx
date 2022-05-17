@@ -1,7 +1,10 @@
 import React from 'react';
+
 import { LoadingIcon } from '../../assets/svg';
-import { Colors } from '../../styles/colors';
-import { ButtonContainer, ButtonLabel, loadingColor } from './Button.style';
+
+import { Small } from '../../styles/typogaphy';
+
+import { ButtonContainer, loadingColor, textColor } from './Button.style';
 
 export interface ButtonProps {
     buttonType:'primary'| 'half' | 'gray' | 'danger'
@@ -15,9 +18,12 @@ export const Button : React.FC<ButtonProps > = (props) => {
 
   return (
     <ButtonContainer buttonType={buttonType} onClick={onClick} disabled={loading}>
-      <ButtonLabel buttonType={buttonType}>
-        { loading ? <LoadingIcon fill={loadingColor[buttonType]} heigth='24px'/> : children}
-      </ButtonLabel>
+      { loading ? 
+        <LoadingIcon fill={loadingColor[buttonType]} heigth='24px'/> 
+        :
+        <Small fontWeight='regular' color={textColor[buttonType]}>
+          {children}
+        </Small>}
     </ButtonContainer>
   );
 };

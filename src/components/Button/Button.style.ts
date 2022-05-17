@@ -9,7 +9,7 @@ const backgroundColor:  Record<ButtonProps['buttonType'], string> =  {
   danger: Colors.danger,
 };
 
-const textColor: Record<ButtonProps['buttonType'], string> = {
+export const textColor: Record<ButtonProps['buttonType'], string> = {
 
   primary: Colors.white,
   half:  Colors.gray,
@@ -36,12 +36,4 @@ transition: opacity 0.1s ease-in-out;
 &:hover{
 opacity: 0.8;
 }
-`;
-
-export const ButtonLabel = styled.span<ButtonProps>`
-display: flex;
-align-items: center;
-justify-content: center;
-height: 100%;
-color: ${(props)=> textColor[props.buttonType]};
 `;
