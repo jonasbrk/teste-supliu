@@ -58,7 +58,7 @@ justify-content: center;
 gap: 32px;
 `;
 
-export const SongFormButton = styled.div`
+export const SongButtonContainer = styled.div`
 width: 100%;
 max-width: 150px;
 min-width: 80px;

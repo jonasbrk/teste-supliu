@@ -8,7 +8,7 @@ width: 350px;
 display: flex;
 flex-direction: column;
 box-sizing: border-box;
-background-color: #e8e8e8;
+background-color: #f5f5f5;
 justify-content: space-between;
 `;
 

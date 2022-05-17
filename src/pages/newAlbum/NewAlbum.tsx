@@ -1,12 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { ArrowLeftIcon } from '../../assets/svg';
-import { Button } from '../../components';
+
+import { AlbumsContext } from '../../utils/context';
+
 import { Api } from '../../services/api';
+
+import { Button } from '../../components';
+
 import { Colors } from '../../styles/colors';
 import { Description, Small, Title } from '../../styles/typogaphy';
-import { AlbumsContext } from '../../utils/context';
-import { AlbumFormButton, AlbumFormContainer, AlbumFormInput, AlbumFormInputContainer, AlbumFormRow, AlbumFormRowButtons, NewAlbumButton, NewAlbumContainer, NewAlbumHeader, NewAlbumMain } from './NewAlbum.styles';
+import { AlbumFormButtonContainer, AlbumFormContainer, AlbumFormInput, AlbumFormInputContainer, AlbumFormRow, AlbumFormRowButtons, NewAlbumButton, NewAlbumContainer, NewAlbumHeader, NewAlbumMain } from './NewAlbum.styles';
 
 export const NewAlbum = () => {
   const {albumsData, setAlbumsData} = useContext(AlbumsContext);
@@ -23,7 +28,7 @@ export const NewAlbum = () => {
     year: '*Ano invalido',
   };
 
-  const existCheck = albumsData.find((e)=> e.name == nameInput);
+  const existCheck = albumsData && albumsData.find((e)=> e.name == nameInput);
 
   const handleAdd = async () => {
 
@@ -34,11 +39,7 @@ export const NewAlbum = () => {
       || existCheck
     ){
       setError(true);
-      console.log(
-        nameInput,yearInput,
-        
-      );
-      
+
     }else{
       setLoading(true);
       try {
@@ -73,23 +74,21 @@ export const NewAlbum = () => {
       </NewAlbumHeader>
       <NewAlbumMain>
         <Title fontWeight='bold'>
-            Novo Album
+            Novo álbum
         </Title>
         <Description fontWeight='regular'>
-            Para adicionar um novo album preencha os dados abaixo.
+            Para adicionar um novo álbum preencha os dados abaixo.
         </Description>
         <AlbumFormContainer>
           <AlbumFormRow>
             <AlbumFormInputContainer>
-              <>
-                <Small fontWeight='regular'>Nome:</Small>
-                <AlbumFormInput onChange={(e)=> setNameInput(e.target.value)}/>
-                {((!nameInput && error) || existCheck) && 
+              <Small fontWeight='regular'>Nome:</Small>
+              <AlbumFormInput onChange={(e)=> setNameInput(e.target.value)}/>
+              {((!nameInput && error) || existCheck) && 
                   <Small fontWeight='regular' color={Colors.danger}>
                     {existCheck ? errors.exist : errors.name}
                   </Small>
-                }
-              </>
+              }
             </AlbumFormInputContainer>
             <AlbumFormInputContainer>
               <Small fontWeight='regular'>Ano:</Small>
@@ -99,20 +98,19 @@ export const NewAlbum = () => {
                 {errors.year}
               </Small>
               }
-            </AlbumFormInputContainer>
-                
+            </AlbumFormInputContainer>    
           </AlbumFormRow>
           <AlbumFormRowButtons>
-            <AlbumFormButton>            
+            <AlbumFormButtonContainer>            
               <Button buttonType='half' onClick={() => navigation(-1)}>
               Cancelar
               </Button>
-            </AlbumFormButton>
-            <AlbumFormButton>            
+            </AlbumFormButtonContainer>
+            <AlbumFormButtonContainer>            
               <Button buttonType='primary' loading={loading} onClick={() => handleAdd()}>
               Adicionar
               </Button>
-            </AlbumFormButton>
+            </AlbumFormButtonContainer>
           </AlbumFormRowButtons>
         </AlbumFormContainer>
       </NewAlbumMain>

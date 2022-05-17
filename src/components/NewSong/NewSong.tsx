@@ -1,11 +1,14 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Description, Small } from '../../styles/typogaphy';
-import { IAlbum } from '../../typings/response';
-import { Modal , Button} from '../';
-import { Colors } from '../../styles/colors';
-import { NewSongContainer, SongFormButton, SongFormContainer, SongFormInput, SongFormItem, SongFormRow, SongFormRowButtons } from './NewSong.styles';
 import { AlbumsContext } from '../../utils/context';
+
 import { Api } from '../../services/api';
+import { IAlbum } from '../../typings/response';
+
+import { Modal , Button} from '../';
+
+import { Colors } from '../../styles/colors';
+import { Description, Small } from '../../styles/typogaphy';
+import { NewSongContainer, SongButtonContainer, SongFormContainer, SongFormInput, SongFormItem, SongFormRow, SongFormRowButtons } from './NewSong.styles';
 
 interface NewSongProps {
     isOpen: boolean
@@ -17,8 +20,8 @@ export const NewSong: React.FC<NewSongProps> = (props) => {
   const { data, isOpen, onClose} = props;
   const {albumsData, setAlbumsData} = useContext(AlbumsContext);
   const [titleInput, setTitleInput] = useState<string>('');
-  const [durationInput, setDurationInput] = useState<string>('');
   const [numberInput, setNumberInput] = useState<string>('');
+  const [durationInput, setDurationInput] = useState<string>('');
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -30,9 +33,8 @@ export const NewSong: React.FC<NewSongProps> = (props) => {
     duration: '*Duração invalida',
   };
 
-  const titleCheck = data.tracks.find((e) => e.title == titleInput);
-  const numberCheck = data.tracks.find((e) => String(e.number) == numberInput);
-
+  const titleCheck = data.tracks && data.tracks.find((e) => e.title == titleInput);
+  const numberCheck = data.tracks && data.tracks.find((e) => String(e.number) == numberInput);
 
   useEffect(()=>{
     if(!isOpen){
@@ -134,16 +136,16 @@ export const NewSong: React.FC<NewSongProps> = (props) => {
             </SongFormItem>
           </SongFormRow>
           <SongFormRowButtons>
-            <SongFormButton>            
+            <SongButtonContainer>            
               <Button buttonType='half' onClick={()=> onClose()}>
               Cancelar
               </Button>
-            </SongFormButton>
-            <SongFormButton >            
+            </SongButtonContainer>
+            <SongButtonContainer >            
               <Button buttonType='primary' loading={loading} onClick={()=> handleAdd()}>
               Adicionar
               </Button>
-            </SongFormButton>
+            </SongButtonContainer>
           </SongFormRowButtons>
         </SongFormContainer>
       </NewSongContainer>

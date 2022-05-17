@@ -1,8 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Small } from '../../styles/typogaphy';
+
 import { IAlbum } from '../../typings/response';
+
 import { Song } from '../Song';
+
+import { Small } from '../../styles/typogaphy';
 import { AlbumContainer, AlbumHeader, AlbumHeaderLabel, AlbumMain, SongHeader, SongInfoContainer } from './Album.styles';
 
 interface AlbumProps {
@@ -11,8 +14,8 @@ interface AlbumProps {
 }
 
 export const Album: React.FC<AlbumProps> = (props) => {
-  const { name, year, tracks, id } = props.data;
-  const { header = true } = props;
+  const { data, header = true } = props;
+  const { name, year, tracks, id } = data;
 
   const navigate = useNavigate();
 
@@ -39,17 +42,14 @@ export const Album: React.FC<AlbumProps> = (props) => {
               Faixa
             </Small> 
           </SongInfoContainer>
-
           <SongInfoContainer column='last'>
             <Small fontWeight='regular'>
               Duração
             </Small>
           </SongInfoContainer>
         </SongHeader>
-
         {tracks && tracks.map((e)=> <Song key={e.id} data={{...e, album: props.data}} disable={header} />)}
       </AlbumMain>
-
     </AlbumContainer>
   );
 };

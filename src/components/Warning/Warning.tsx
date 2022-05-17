@@ -1,8 +1,9 @@
 import React from 'react';
+
+import { Button, Modal } from '../';
+
 import { Colors } from '../../styles/colors';
-import { Description, Title } from '../../styles/typogaphy';
-import { Button } from '../Button';
-import { Modal } from '../Modal';
+import { Description } from '../../styles/typogaphy';
 import {  WarningContainer, WarningFooter, WarningMain } from './Warning.styles';
 
 export interface dataWarningProps {
@@ -22,19 +23,18 @@ interface WarningProps {
 export const Warning :React.FC<WarningProps> = (props) => {
 
   const {data, loading, isOpen, onClose, onValidate} = props;
-  const { id, name, type} = data;
+  const {  name, type} = data;
   
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} title='ATENÇÃO'>
       <WarningContainer>
         <WarningMain>
-          <Description fontWeight='bold' color={Colors.darkerGray}>
-            Voce está prestes a excluir {type == 'album'? 'o album' : 'a faixa'} {name}, está ação é irreversivel.
+          <Description fontWeight='regular' color={Colors.darkerGray}>
+            Voce está prestes a excluir {type == 'album'? 'o album' : 'a faixa'} {name}, esta ação é irreversível.
           </Description>
           <Description fontWeight='bold' color={Colors.darkerGray}>
               Deseja continuar?
           </Description>
-
         </WarningMain>
         <WarningFooter>
           <Button buttonType='half' onClick={()=> onClose()}>

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+
 import { Small } from '../../styles/typogaphy';
+
 import { Button } from '../Button';
 import { SearchInputContainer, SearchBarContainer, SearchInput, SearchButtonContainer } from './SearchBar.styles';
 
@@ -9,10 +11,11 @@ interface SearchBarProps {
 }
 
 export const SearchBar: React.FC<SearchBarProps> = (props) => {
-  const [query, setQuery] = useState('');
   const {onClick, loading} = props;
+  const [query, setQuery] = useState<string>('');
 
   useEffect(()=>{  if(!query) onClick(query);} ,[query]);
+
   return (
     <SearchBarContainer>
       <SearchInputContainer>

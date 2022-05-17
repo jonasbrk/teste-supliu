@@ -64,12 +64,11 @@ justify-content: center;
 `;
 
 export const AlbumFormRowButtons = styled(AlbumFormRow)`
-
 justify-content: center;
 gap: 32px;
 `;
 
-export const AlbumFormButton = styled.div`
+export const AlbumFormButtonContainer = styled.div`
 width: 20%;
 max-width: 150px;
 min-width: 80px;

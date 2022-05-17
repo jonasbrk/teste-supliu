@@ -1,17 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import { AlbumsContext } from '../../utils/context';
+
+import { Api } from '../../services/api';
+
+import { IAlbum } from '../../typings/response';
+
 import { Album, Button, SearchBar } from '../../components';
 import { Loading } from '../../components/Loading';
-import { Api } from '../../services/api';
-import { IAlbum } from '../../typings/response';
-import { AlbumsContext } from '../../utils/context';
+
 import { AlbumAddContainer, HomeContainer, SearchResults } from './Home.styles';
 
 export const Home = () => {
 
   const {albumsData} = useContext(AlbumsContext);
-  const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<IAlbum[]>(albumsData);
+  const [loading, setLoading] = useState<boolean>(true);
   const [searching, setSearching] = useState<boolean>(false);
 
   const handleSearch = async (querry: string) => {
@@ -27,7 +32,6 @@ export const Home = () => {
           setData(response.data.data);
           setLoading(false);
           setSearching(false);
-
           console.log('Request feito com sucesso');   
         }else {
           console.log('Algo deu errado');
@@ -39,7 +43,7 @@ export const Home = () => {
   }; 
 
   useEffect(()=> {
-    if(albumsData.length) {
+    if(albumsData) {
       setLoading(false);
       setData(albumsData);
     }
@@ -57,7 +61,7 @@ export const Home = () => {
           </SearchResults>
           <AlbumAddContainer>
             <Button buttonType='primary' onClick={()=>navigation('/new')}>
-              Novo Album
+              Novo Álbum
             </Button>
           </AlbumAddContainer>
         </HomeContainer>

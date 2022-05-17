@@ -14,7 +14,7 @@ interface SongWrapperProps {
     column: 'index' |  'first' | 'delete' | 'last'
 }
 
-export const SongWrapper = styled.div<SongWrapperProps>`
+export const SongColumn = styled.div<SongWrapperProps>`
 height: 100%;
 display: flex;
 align-items: center;

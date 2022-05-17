@@ -1,15 +1,19 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import { TrashIcon } from '../../assets/svg';
+
 import { Api } from '../../services/api';
+
+import { useTimeFormater } from '../../utils/useTimeFormater';
+import { AlbumsContext } from '../../utils/context';
+
+import { ITrack } from '../../typings/response';
+
+import { Warning } from '../Warning';
+
 import { Colors } from '../../styles/colors';
 import { Small } from '../../styles/typogaphy';
-import { ITrack } from '../../typings/response';
-import { AlbumsContext } from '../../utils/context';
-import { useTimeFormater } from '../../utils/useTimeFormater';
-import { Warning } from '../Warning';
-import { dataWarningProps } from '../Warning/Warning';
-import { SongContainer, SongWrapper, SongDeleteButton } from './Song.styles';
+import { SongContainer, SongColumn, SongDeleteButton } from './Song.styles';
 
 interface SongProps {
 data: ITrack
@@ -33,8 +37,7 @@ export const Song: React.FC<SongProps> = (props) => {
         const response = await Api('/track/' + dataProps.id,{
           method:'DELETE',
         });
-        if(response.status == 200){
-          
+        if(response.status == 200){   
           const newData = albumsData.filter((e) => e.id != album.id);
           const newAlbuns = [...newData, 
             {...album,
@@ -49,13 +52,10 @@ export const Song: React.FC<SongProps> = (props) => {
         }
       } catch (err) {
         console.log(err);
-      }
-      
+      } 
     }
-  
   };
 
-  const navigate = useNavigate();
   return (
     <SongContainer>
       <Warning 
@@ -65,28 +65,28 @@ export const Song: React.FC<SongProps> = (props) => {
         onValidate={()=> handleDelete(data, true)}
         loading={loading}
       ></Warning>
-      <SongWrapper column='index'>
+      <SongColumn column='index'>
         <Small fontWeight='regular'>
           {number}
         </Small>   
-      </SongWrapper>
-      <SongWrapper column='first'>
+      </SongColumn>
+      <SongColumn column='first'>
         <Small fontWeight='regular'>
           {title}
         </Small>      
-      </SongWrapper>
+      </SongColumn>
       {!disable &&
-      <SongWrapper column='delete'>
+      <SongColumn column='delete'>
         <SongDeleteButton onClick={() => handleDelete(data, false)}>
           <TrashIcon fill={Colors.danger}/>
         </SongDeleteButton>
-      </SongWrapper>
+      </SongColumn>
       }
-      <SongWrapper column='last'>
+      <SongColumn column='last'>
         <Small fontWeight='regular'>
           {useTimeFormater(duration)}
         </Small>
-      </SongWrapper>
+      </SongColumn>
     </SongContainer>
   );
 };

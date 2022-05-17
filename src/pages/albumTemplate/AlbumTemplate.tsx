@@ -1,15 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeftIcon, TrashIcon } from '../../assets/svg';
-import { Album, Button, Modal, NewSong } from '../../components';
-import { Warning } from '../../components/Warning';
+
+import { ArrowLeftIcon } from '../../assets/svg';
+
 import { dataWarningProps } from '../../components/Warning/Warning';
-import { Api } from '../../services/api';
-import { Colors } from '../../styles/colors';
-import { Small } from '../../styles/typogaphy';
 import { IAlbum } from '../../typings/response';
+
 import { AlbumsContext } from '../../utils/context';
 import { useTimeFormater } from '../../utils/useTimeFormater';
+
+import { Api } from '../../services/api';
+
+import { Album, Button, NewSong, Warning } from '../../components';
+
+import { Colors } from '../../styles/colors';
+import { Small } from '../../styles/typogaphy';
 import { TemplateButton, DescriptionWrapper, SongList, TemplateBanner, TemplateContainer, TemplateDescription, TemplateHeader, TemplateTitle, SongAddContainer } from './AlbumTemplate.styles';
 
 export const AlbumTemplate = () => {
@@ -18,7 +23,6 @@ export const AlbumTemplate = () => {
   const [ data , setData ] = useState<IAlbum[]>(albumsData.filter((e)=> String(e.id) == id));
   const {name, tracks = [], year } = data[0];
   const [loading, setLoading] = useState<boolean>(false);
-  
   const [warning, setWarning] = useState<boolean>(false);
   const [newSong, setNewSong] = useState<boolean>(false);
 
@@ -41,17 +45,14 @@ export const AlbumTemplate = () => {
         if(response.status == 200){
           setAlbumsData(albumsData.filter((e) => e.id != dataProps.id));
           setLoading(false);
-          navigate('/');
-          
+          navigate('/');   
         }else{
           console.log(response);
         }
       } catch (err) {
         console.log(err);
-      }
-      
+      } 
     }
-  
   };
 
   const navigate = useNavigate();
@@ -65,7 +66,6 @@ export const AlbumTemplate = () => {
         onValidate={handleDelete}
         loading={loading}
       />
-        
       <NewSong data={data[0]} isOpen={newSong} onClose={()=> setNewSong(false)}/>
       <TemplateHeader>
         <TemplateButton onClick={()=> navigate('/')}>
@@ -111,10 +111,8 @@ export const AlbumTemplate = () => {
               }
             </Small>
           </DescriptionWrapper>
-
         </TemplateDescription>
       </TemplateBanner>
-
       <SongList>
         <Album data={data[0]} header={false}/>
       </SongList>
