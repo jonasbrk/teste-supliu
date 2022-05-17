@@ -29,10 +29,16 @@ export const Warning :React.FC<WarningProps> = (props) => {
     <Modal isOpen={isOpen} onClose={onClose} title='ATENÇÃO'>
       <WarningContainer>
         <WarningMain>
-          <Description fontWeight='regular' color={Colors.darkerGray}>
-            Voce está prestes a excluir {type == 'album'? 'o album' : 'a faixa'} {name}, esta ação é irreversível.
+          <Description 
+            fontWeight='regular' 
+            color={Colors.darkerGray}>
+            Voce está prestes a excluir 
+            {type == 'album'? 'o album' : 'a faixa'} {name}
+            , esta ação é irreversível.
           </Description>
-          <Description fontWeight='bold' color={Colors.darkerGray}>
+          <Description 
+            fontWeight='bold' 
+            color={Colors.darkerGray}>
               Deseja continuar?
           </Description>
         </WarningMain>
@@ -40,7 +46,10 @@ export const Warning :React.FC<WarningProps> = (props) => {
           <Button buttonType='half' onClick={()=> onClose()}>
               Cancelar
           </Button>
-          <Button buttonType='primary' loading={loading} onClick={()=> onValidate(data, true)}>
+          <Button 
+            buttonType='primary' 
+            loading={loading} 
+            onClick={()=> onValidate(data, true)}>
               Excluir
           </Button>
         </WarningFooter>

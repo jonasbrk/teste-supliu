@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { Colors } from '../../styles/colors';
-import { Button } from '../Button';
 
 export const SongContainer = styled.div`
 width: 100%;
@@ -22,19 +20,15 @@ grid-column: ${props => props.column && props.column};
 `;
 
 export const SongDeleteButton = styled.div`
-
 height: 16px;
 width: 16px;
 display: flex;
 justify-content: center;
 align-items: center;
-
 opacity: 0;
 transition: all 0.1s ease-in-out;
 
 ${SongContainer}:hover & {
     opacity: 1;
-
 }
-
 `;

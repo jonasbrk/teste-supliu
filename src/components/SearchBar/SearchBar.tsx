@@ -3,7 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { Small } from '../../styles/typogaphy';
 
 import { Button } from '../Button';
-import { SearchInputContainer, SearchBarContainer, SearchInput, SearchButtonContainer } from './SearchBar.styles';
+import { 
+  SearchInputContainer,
+  SearchBarContainer,
+  SearchInput,
+  SearchButtonContainer, 
+} from './SearchBar.styles';
 
 interface SearchBarProps {
     onClick: (query: string ) => void;
@@ -19,11 +24,18 @@ export const SearchBar: React.FC<SearchBarProps> = (props) => {
   return (
     <SearchBarContainer>
       <SearchInputContainer>
-        <Small fontWeight='regular' marginLeft={10}>Digite uma palavra chave</Small>
-        <SearchInput placeholder='Ex. Minas Gerais' onChange={(e) => setQuery(e.target.value)}/>
+        <Small 
+          fontWeight='regular'
+          marginLeft={10}>
+           Digite uma palavra chave
+        </Small>
+        <SearchInput placeholder='Ex. Minas Gerais'
+          onChange={(e) => setQuery(e.target.value)}/>
       </SearchInputContainer>
       <SearchButtonContainer>
-        <Button buttonType='primary' loading={loading} onClick={()=> onClick(query)}>
+        <Button buttonType='primary'
+          loading={loading}
+          onClick={()=> onClick(query)}>
             Procurar
         </Button>
       </SearchButtonContainer>

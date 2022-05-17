@@ -2,7 +2,6 @@ import styled, { keyframes } from 'styled-components';
 import { Colors } from '../../styles/colors';
 
 export const ModalContainer = styled.div`
-
 height: 100vh;
 width: 100vw;
 position: fixed;
@@ -13,7 +12,6 @@ justify-content: center;
 align-items: center;
 z-index: 1000;
 `;
-
 
 export const ModalOverlay = styled.div`
 position: absolute;
@@ -38,7 +36,6 @@ to {
 }
 `;
 
-
 export const ModalBox = styled.div`
 position: relative;
 min-height: 100px;
@@ -53,7 +50,6 @@ animation: ${openAnimation} 0.3s ease-in-out forwards;
 `;
 
 export const ModalHeader = styled.div`
-
 position: relative;
 height: 50px;
 width: 100%;
@@ -78,7 +74,6 @@ border: 0;
 transition: transform 0.1s ease;
 
 :hover {
-
     transform: scale(1.1);
 }
 `;

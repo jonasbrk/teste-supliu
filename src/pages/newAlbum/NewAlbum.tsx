@@ -73,7 +73,7 @@ export const NewAlbum = () => {
           console.log(err);
         }
       };
-          
+
       fetch();
 
     }else{
@@ -86,7 +86,7 @@ export const NewAlbum = () => {
     <NewAlbumContainer>
       <NewAlbumHeader>
         <NewAlbumButton onClick={() => navigation(-1)}>
-          <ArrowLeftIcon heigth='16px'/>
+          <ArrowLeftIcon height='16px'/>
           <Small fontWeight='regular'>
               Voltar
           </Small>

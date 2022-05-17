@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
 
@@ -33,7 +32,6 @@ const App = () => {
     fetchData();
   },[]);
 
-
   return (
     <>
       <GlobalStyles/>
@@ -45,7 +43,6 @@ const App = () => {
           <Route path='*' element={<NoMatch/>}/>
         </Layout>
       </AlbumsContext.Provider>
-  
     </>
   );
 };

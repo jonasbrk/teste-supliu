@@ -6,3 +6,4 @@ export {Song} from './Song';
 export {NewSong} from './NewSong';
 export {Modal} from './Modal';
 export {Warning} from './Warning';
+export {Loading} from './Loading';

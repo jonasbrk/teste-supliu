@@ -8,7 +8,15 @@ import { Modal , Button} from '../';
 
 import { Colors } from '../../styles/colors';
 import { Description, Small } from '../../styles/typogaphy';
-import { NewSongContainer, SongButtonContainer, SongFormContainer, SongFormInput, SongFormItem, SongFormRow, SongFormRowButtons } from './NewSong.styles';
+import { 
+  NewSongContainer,
+  SongButtonContainer,
+  SongFormContainer,
+  SongFormInput,
+  SongFormItem,
+  SongFormRow,
+  SongFormRowButtons,
+} from './NewSong.styles';
 
 interface NewSongProps {
     isOpen: boolean
@@ -78,27 +86,25 @@ export const NewSong: React.FC<NewSongProps> = (props) => {
             },
           });
           if(response.status == 200){
-            console.log(response);
-        
+            
             const newData = albumsData.filter((e) => e.id != data.id);
             const newAlbuns = [...newData, 
               {...data, tracks: data.tracks 
                 ? [...data.tracks, response.data] 
                 : [response.data],
               }];
-  
+
             setAlbumsData(newAlbuns);
             setLoading(false);
             onClose();
-
           }else{
             console.log(response);
           }
         } catch (err) {
           console.log(err);
         }
-      };
-      
+      };   
+
       fetch();
 
     }else{

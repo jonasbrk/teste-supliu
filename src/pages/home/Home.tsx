@@ -7,13 +7,11 @@ import { Api } from '../../services/api';
 
 import { IAlbum } from '../../typings/response';
 
-import { Album, Button, SearchBar } from '../../components';
-import { Loading } from '../../components/Loading';
+import { Album, Button, SearchBar, Loading } from '../../components';
 
 import { AlbumAddContainer, HomeContainer, SearchResults } from './Home.styles';
 
 export const Home = () => {
-
   const {albumsData} = useContext(AlbumsContext);
   const [data, setData] = useState<IAlbum[]>(albumsData);
   const [loading, setLoading] = useState<boolean>(true);

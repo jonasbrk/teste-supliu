@@ -28,7 +28,6 @@ background-color: ${Colors.halfTransparent};
 }
 `;
 
-
 export const Header = styled.header`
 height: 100px;
 width: 100%;

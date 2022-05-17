@@ -1,15 +1,12 @@
 import styled from 'styled-components';
 import { Colors } from '../../styles/colors';
 
-
 export const TemplateContainer = styled.div`
-
 height: 100%;
 width: 100%;
 display: flex;
 flex-direction: column;
 position: relative;
-
 `;
 
 export const TemplateHeader = styled.div`
@@ -23,7 +20,6 @@ justify-content: space-between;
 `; 
 
 export const TemplateButton = styled.button`
-
 height: 30px;
 min-width: 30px;
 display: flex;
@@ -36,13 +32,11 @@ transition: transform 0.1s ease;
 cursor: pointer;
 
 :hover {
-
     transform: scale(1.1);
 }
 `;
 
 export const TemplateBanner = styled.div`
-
 height: 200px;
 width: 100%;
 padding: 16px 10px;
@@ -59,7 +53,6 @@ font-size: 48px;
 `;
 
 export const TemplateDescription = styled.div`
-
 height: 40px;
 width: 100%;
 display: grid;

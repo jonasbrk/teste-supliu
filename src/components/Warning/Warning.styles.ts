@@ -2,7 +2,6 @@ import styled, { keyframes } from 'styled-components';
 import { Colors } from '../../styles/colors';
 
 export const WarningContainer = styled.div`
-
 height: 250px;
 width: 350px;
 display: flex;
@@ -13,7 +12,6 @@ justify-content: space-between;
 `;
 
 export const WarningMain = styled.div`
-
 height: 100%;
 width: 100%;
 display: flex;
@@ -26,9 +24,7 @@ box-sizing: border-box;
 align-items: center;
 `;
 
-
 export const WarningFooter = styled.div`
-
 height: 100px;
 width: 100%;
 display: flex;

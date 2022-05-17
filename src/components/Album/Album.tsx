@@ -48,7 +48,12 @@ export const Album: React.FC<AlbumProps> = (props) => {
             </Small>
           </SongInfoContainer>
         </SongHeader>
-        {tracks && tracks.map((e)=> <Song key={e.id} data={{...e, album: props.data}} disable={header} />)}
+        {tracks && 
+        tracks.sort((a, b) => a.number > b.number ? 1 : -1)
+          .map((e)=> 
+            <Song key={e.id} 
+              data={{...e, album: props.data}}
+              disable={header} />)}
       </AlbumMain>
     </AlbumContainer>
   );

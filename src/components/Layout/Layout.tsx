@@ -6,7 +6,9 @@ import { Colors } from '../../styles/colors';
 import { Routes } from 'react-router-dom';
 
 export const Layout = (props : any) => {
+
   const {children} = props;
+  
   return (
     <LayoutContainer>
       <PageContainer>

@@ -10,7 +10,6 @@ const backgroundColor:  Record<ButtonProps['buttonType'], string> =  {
 };
 
 export const textColor: Record<ButtonProps['buttonType'], string> = {
-
   primary: Colors.white,
   half:  Colors.gray,
   gray: Colors.white,
@@ -18,7 +17,6 @@ export const textColor: Record<ButtonProps['buttonType'], string> = {
 };
 
 export const loadingColor: Record<ButtonProps['buttonType'], string> = {
-
   primary: Colors.white,
   half:  Colors.gray,
   gray: Colors.white,

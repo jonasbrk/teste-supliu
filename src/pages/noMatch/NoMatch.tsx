@@ -2,7 +2,10 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components';
 import { Title } from '../../styles/typogaphy';
-import { NoMatchButtonContainer, NoMatchContainer } from './NoMatch.styles';
+import {
+  NoMatchButtonContainer, 
+  NoMatchContainer, 
+} from './NoMatch.styles';
 
 export const NoMatch = () => {
 

@@ -13,12 +13,17 @@ import { Warning } from '../Warning';
 
 import { Colors } from '../../styles/colors';
 import { Small } from '../../styles/typogaphy';
-import { SongContainer, SongColumn, SongDeleteButton } from './Song.styles';
+import { 
+  SongContainer, 
+  SongColumn,
+  SongDeleteButton, 
+} from './Song.styles';
 
 interface SongProps {
 data: ITrack
 disable: boolean
 }
+
 export const Song: React.FC<SongProps> = (props) => {
   const { data, disable } = props;
   const {id, album, duration, number, title } = data;
@@ -46,7 +51,7 @@ export const Song: React.FC<SongProps> = (props) => {
             }];
 
           setAlbumsData(newAlbuns);
-          
+
         }else{
           console.log(response);
         }

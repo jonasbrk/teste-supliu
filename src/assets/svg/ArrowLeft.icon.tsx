@@ -3,17 +3,17 @@ import React from 'react';
 import { Colors } from '../../styles/colors';
 
 interface svgProps {
-    heigth?: string
+    height?: string
     width?: string
     fill?: string
     }
 
 export const ArrowLeftIcon: React.FC<svgProps> = (props) => {
-  const { fill = Colors.darkerGray, heigth, width} = props;
+  const { fill = Colors.darkerGray, height, width} = props;
   return (
     <svg
       role="img"
-      height={heigth}
+      height={height}
       width={width}
       fill={fill}
       viewBox="0 0 24 24"

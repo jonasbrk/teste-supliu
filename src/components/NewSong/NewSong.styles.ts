@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { Colors } from '../../styles/colors';
 
-
 export const NewSongContainer = styled.div`
 width: 400px;
 display: flex;
@@ -11,7 +10,6 @@ background-color: #f5f5f5;
 `;
 
 export const SongFormContainer = styled.div`
-
 margin-top: 24px;
 width: 100%;
 display: flex;
@@ -21,7 +19,6 @@ justify-content: center;
 `;
 
 export const SongFormRow = styled.div`
-
 height: 100px;
 width: 100%;
 display: flex;
@@ -50,7 +47,6 @@ border: 1px solid ${Colors.halfTransparent};
 box-shadow: 0px 2px 10px 0px rgb(0 0 0 / 5%);
 border-radius: 4px ;
 `;
-
 
 export const SongFormRowButtons = styled(SongFormRow)`
 height: 50px;

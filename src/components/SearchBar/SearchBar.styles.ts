@@ -1,4 +1,3 @@
-import { type } from 'os';
 import styled from 'styled-components';
 import { Colors } from '../../styles/colors';
 
@@ -23,9 +22,7 @@ max-width: 150px;
 min-width: 80px;
 `;
 
-export const SearchInput = styled.input.attrs({
-  type:'text',
-})`
+export const SearchInput = styled.input`
 height: 40px;
 background-color: ${Colors.white};
 border-radius: 100px;
