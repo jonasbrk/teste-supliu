@@ -9,7 +9,7 @@ align-items: center;
 justify-content: center;
 `;
 
-export const LoadingIconWapper = styled.div`
+export const LoadingIconConatainer = styled.div`
 height: 10%;
 display: flex;
 justify-content: center;

@@ -1,8 +1,10 @@
 import React from 'react';
+
 import { LoadingIcon } from '../../assets/svg';
+
 import { Colors } from '../../styles/colors';
-import { Small } from '../../styles/typogaphy';
-import { LoadingContainer, LoadingIconWapper } from './Loading.styles';
+
+import { LoadingContainer, LoadingIconConatainer } from './Loading.styles';
 
 interface LoadingProps {
   fill?: string
@@ -14,9 +16,9 @@ export const Loading: React.FC<LoadingProps> = (props) => {
 
   return (
     <LoadingContainer>
-      <LoadingIconWapper>
+      <LoadingIconConatainer>
         <LoadingIcon fill={fill}/>
-      </LoadingIconWapper>
+      </LoadingIconConatainer>
     </LoadingContainer>
   );
 };
