@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Colors } from '../../styles/colors';
-import { AlbumTemplate } from './AlbumTemplate';
 
 
 export const TemplateContainer = styled.div`
@@ -34,6 +33,7 @@ background-color: ${Colors.transparent};
 gap: 8px;
 border: 0;
 transition: transform 0.1s ease;
+cursor: pointer;
 
 :hover {
 

@@ -16,20 +16,28 @@ import { Album, Button, NewSong, Warning } from '../../components';
 import { Colors } from '../../styles/colors';
 import { Small } from '../../styles/typogaphy';
 import { TemplateButton, DescriptionWrapper, SongList, TemplateBanner, TemplateContainer, TemplateDescription, TemplateHeader, TemplateTitle, SongAddContainer } from './AlbumTemplate.styles';
+import { Loading } from '../../components/Loading';
 
 export const AlbumTemplate = () => {
   const { id } = useParams();
   const {albumsData, setAlbumsData} = useContext(AlbumsContext);
-  const [ data , setData ] = useState<IAlbum[]>(albumsData.filter((e)=> String(e.id) == id));
-  const {name, tracks = [], year } = data[0];
+  const [ data , setData ] = useState<IAlbum>(albumsData.filter((e)=> String(e.id) == id)[0]);
   const [loading, setLoading] = useState<boolean>(false);
   const [warning, setWarning] = useState<boolean>(false);
   const [newSong, setNewSong] = useState<boolean>(false);
+  
+  const navigate = useNavigate();
 
   useEffect(()=>{
-    const newData = albumsData.filter((e)=> String(e.id) == id);
-    setData(newData);
-  }, [albumsData]);
+    if(albumsData.length){
+      const newData = albumsData.filter((e)=> String(e.id) == id)[0];
+      if(newData){
+        setData(newData);
+      }else{
+        navigate('/');
+      }
+    }
+  }, [albumsData, data]);
 
   const handleDelete = async (dataProps : dataWarningProps, validate: boolean ) => {
 
@@ -55,72 +63,77 @@ export const AlbumTemplate = () => {
     }
   };
 
-  const navigate = useNavigate();
-
   return (
-    <TemplateContainer>
-      <Warning 
-        isOpen={warning}
-        onClose={()=> setWarning(false)}
-        data={{...data[0], type: 'album'}}
-        onValidate={handleDelete}
-        loading={loading}
-      />
-      <NewSong data={data[0]} isOpen={newSong} onClose={()=> setNewSong(false)}/>
-      <TemplateHeader>
-        <TemplateButton onClick={()=> navigate('/')}>
-          <ArrowLeftIcon heigth='16px'/>
-          <Small fontWeight='regular'>
+    <>
+      {!data 
+        ? 
+        <Loading/> 
+        :  
+        <TemplateContainer>
+          <Warning 
+            isOpen={warning}
+            onClose={()=> setWarning(false)}
+            data={{...data, type: 'album'}}
+            onValidate={handleDelete}
+            loading={loading}
+          />
+          <NewSong data={data} isOpen={newSong} onClose={()=> setNewSong(false)}/>
+          <TemplateHeader>
+            <TemplateButton onClick={()=> navigate('/')}>
+              <ArrowLeftIcon heigth='16px'/>
+              <Small fontWeight='regular'>
               Voltar
-          </Small>
-        </TemplateButton>
-        <TemplateButton onClick={()=> handleDelete({...data[0], type: 'album'}, false)}>
-          <Small fontWeight='regular' color={Colors.danger}>
+              </Small>
+            </TemplateButton>
+            <TemplateButton onClick={()=> handleDelete({...data, type: 'album'}, false)}>
+              <Small fontWeight='regular' color={Colors.danger}>
               Excluir Album
-          </Small>
-        </TemplateButton>
-      </TemplateHeader>
-      <TemplateBanner>
-        <TemplateTitle>
-          {name}
-        </TemplateTitle>
-        <TemplateDescription>
-          <DescriptionWrapper>
-            <Small fontWeight='light'>
+              </Small>
+            </TemplateButton>
+          </TemplateHeader>
+          <TemplateBanner>
+            <TemplateTitle>
+              {data.name}
+            </TemplateTitle>
+            <TemplateDescription>
+              <DescriptionWrapper>
+                <Small fontWeight='light'>
                 Lançado em:
-            </Small>
-            <Small fontWeight='bold'>
-              {year}
-            </Small>
-          </DescriptionWrapper>
-          <DescriptionWrapper>
-            <Small fontWeight='light'>
+                </Small>
+                <Small fontWeight='bold'>
+                  {data.year}
+                </Small>
+              </DescriptionWrapper>
+              <DescriptionWrapper>
+                <Small fontWeight='light'>
                 Numero de musicas:
-            </Small>
-            <Small fontWeight='bold'>
-              {tracks.length}
-            </Small>
-          </DescriptionWrapper>
-          <DescriptionWrapper>
-            <Small fontWeight='light'>
+                </Small>
+                <Small fontWeight='bold'>
+                  {data.tracks.length}
+                </Small>
+              </DescriptionWrapper>
+              <DescriptionWrapper>
+                <Small fontWeight='light'>
                 Tempo de reprodução total:
-            </Small>
-            <Small fontWeight='bold'>
-              {tracks.length &&
-                useTimeFormater(tracks.map((e) => e.duration).reduce((p, c) => p + c), true) 
-              }
-            </Small>
-          </DescriptionWrapper>
-        </TemplateDescription>
-      </TemplateBanner>
-      <SongList>
-        <Album data={data[0]} header={false}/>
-      </SongList>
-      <SongAddContainer >
-        <Button buttonType='primary' onClick={()=> setNewSong(true)}>
+                </Small>
+                <Small fontWeight='bold'>
+                  {data.tracks.length &&
+                useTimeFormater(data.tracks.map((e) => e.duration).reduce((p, c) => p + c), true) 
+                  }
+                </Small>
+              </DescriptionWrapper>
+            </TemplateDescription>
+          </TemplateBanner>
+          <SongList>
+            <Album data={data} header={false}/>
+          </SongList>
+          <SongAddContainer >
+            <Button buttonType='primary' onClick={()=> setNewSong(true)}>
             Nova Faixa
-        </Button>
-      </SongAddContainer>   
-    </TemplateContainer>
+            </Button>
+          </SongAddContainer>   
+        </TemplateContainer>
+      }
+    </>
   );
 };
